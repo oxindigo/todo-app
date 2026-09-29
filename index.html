@@ -249,6 +249,7 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
         <b style="margin-top:12px">포인트 색</b><div class="sw" id="sw"></div>
         <b style="margin-top:12px">배경 효과</b><button class="btn btn-s" id="leafBtn" type="button" style="width:100%"></button>
         <b style="margin-top:12px">백업</b><div style="display:flex;gap:6px"><button class="btn btn-s" id="expBtn" type="button" style="flex:1">내보내기</button><button class="btn btn-s" id="impBtn" type="button" style="flex:1">가져오기</button></div><input type="file" id="impFile" accept="application/json,.json" hidden>
+        <div id="badgeWrap" hidden><b style="margin-top:12px">앱 아이콘 숫자</b><button class="btn btn-s" id="badgeBtn" type="button" style="width:100%"></button></div>
         <div id="instWrap" hidden><b style="margin-top:12px">앱으로 쓰기</b><button class="btn btn-p" id="instBtn" type="button" style="width:100%">홈 화면에 앱 설치</button></div>
       </div>
     </div>
@@ -422,12 +423,28 @@ function renderView(){
   $("#navBtn").setAttribute("aria-label",c?"오늘 할 일로":"캘린더 열기");
 }
 function go(v){if(S.view===v)return;S.view=v;try{history.replaceState(null,"",v==="cal"?"#cal":location.pathname+location.search);}catch(e){}if(v==="cal"&&S.calSel!==T()&&!S._keepSel){}render();scrollTo({top:0});}
+/* app icon badge: remaining tasks for today (incl. carried-over) */
+const BADGE_OK=IS_PWA&&"setAppBadge" in navigator;
+const notifState=()=>("Notification" in window)?Notification.permission:"granted";
+const badgeOn=()=>BADGE_OK&&lsGet("wa.badge")!==false&&notifState()==="granted";
+function badgeCount(){const t=T();return all().filter(x=>!x.done&&(inToday(x)||(x.due&&x.due<t)||(!x.due&&x.myDay&&x.myDay<t))).length;}
+let lastBadge=-1;
+function updateBadge(){if(!BADGE_OK)return;try{if(!badgeOn()){if(lastBadge!==0){navigator.clearAppBadge&&navigator.clearAppBadge().catch(()=>{});lastBadge=0;}return;}
+  const n=badgeCount();if(n===lastBadge)return;lastBadge=n;(n?navigator.setAppBadge(n):navigator.clearAppBadge()).catch(()=>{});}catch(e){}}
+async function enableBadge(){lsSet("wa.badge",true);
+  if("Notification" in window&&Notification.permission==="default"){try{await Notification.requestPermission();}catch(e){}}
+  if(notifState()!=="granted"){toast(notifState()==="denied"?"설정 앱 → 알림에서 이 앱의 알림을 허용해 주세요":"알림을 허용해야 숫자가 표시돼요");}
+  else toast("앱 아이콘에 남은 할 일 개수가 표시돼요");
+  lastBadge=-1;updateBadge();render();}
 function renderBrand(){
   const n=(S.prefs.name??DEF_NAME).trim();$("#brandName").textContent=n?n+"의 할 일":"오늘의 할 일";$("#hanko").textContent=n?n[0]:"燈";
   document.title=n?n+"의 할 일":"오늘의 할 일";
   const ni=$("#nameIn");if(ni&&document.activeElement!==ni)ni.value=n;
+  const showBadgeAsk=BADGE_OK&&standalone()&&!badgeOn()&&notifState()!=="denied"&&!lsGet("wa.badgeAskHide");
+  if(BADGE_OK){$("#badgeWrap").hidden=false;$("#badgeBtn").textContent=badgeOn()?"남은 개수 표시 끄기":"남은 개수 표시 켜기";}
+  updateBadge();
   const showB=IS_PWA&&!standalone()&&!lsGet("wa.instHide");
-  $("#instBanner").innerHTML=showB?'<div class="inst-banner">📲 <span><b>홈 화면에 추가</b>하면 앱처럼 쓸 수 있어요</span><button type="button" class="btn btn-s" id="guideOpen" style="height:30px">방법</button><button type="button" class="x" id="instHide" aria-label="닫기">×</button></div>':"";
+  $("#instBanner").innerHTML=showBadgeAsk?'<div class="inst-banner">🔴 <span>앱 아이콘에 <b>남은 할 일 개수</b>를 표시할까요?</span><button type="button" class="btn btn-p" id="badgeAsk" style="height:30px">켜기</button><button type="button" class="x" id="badgeAskHide" aria-label="닫기">×</button></div>':showB?'<div class="inst-banner">📲 <span><b>홈 화면에 추가</b>하면 앱처럼 쓸 수 있어요</span><button type="button" class="btn btn-s" id="guideOpen" style="height:30px">방법</button><button type="button" class="x" id="instHide" aria-label="닫기">×</button></div>':"";
 }
 function renderPop(){
   $("#instWrap").hidden=!(IS_PWA&&!standalone());
@@ -540,6 +557,9 @@ document.addEventListener("click",e=>{
   if(g("#calPrev")||g("#calNext")){const[y,m]=S.calMonth.split("-").map(Number);const d=new Date(y,m-1+(g("#calPrev")?-1:1),1);S.calMonth=d.getFullYear()+"-"+pad(d.getMonth()+1);render();return;}
   if(g("#guideOpen")||g("#instBtn")){$("#pop").hidden=true;if(deferredInstall&&g("#instBtn")){deferredInstall.prompt();deferredInstall.userChoice.finally(()=>{deferredInstall=null;});}else $("#guide").hidden=false;return;}
   if(g("#guideClose")||e.target.id==="guide"){$("#guide").hidden=true;return;}
+  if(g("#badgeAsk")){enableBadge();return;}
+  if(g("#badgeAskHide")){lsSet("wa.badgeAskHide",true);renderBrand();return;}
+  if(g("#badgeBtn")){if(badgeOn()){lsSet("wa.badge",false);lastBadge=-1;updateBadge();toast("아이콘 숫자 표시를 껐어요");render();}else enableBadge();return;}
   if(g("#instHide")){lsSet("wa.instHide",true);renderBrand();return;}
   if(g("#expBtn")){exportData();return;}
   if(g("#impBtn")){$("#impFile").click();return;}
