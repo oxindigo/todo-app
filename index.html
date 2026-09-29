@@ -603,7 +603,12 @@ addEventListener("hashchange",()=>{const v=location.hash==="#cal"?"cal":"today";
 let lastDay=T();setInterval(()=>{if(T()!==lastDay){lastDay=T();S.calSel=T();render();}},60000);
 
 loadCache();render();connect();
-if(IS_PWA&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
+if(IS_PWA&&"serviceWorker" in navigator&&/^https?:/.test(location.protocol)){
+  const had=!!navigator.serviceWorker.controller;let reloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{if(had&&!reloaded){reloaded=true;flush();location.reload();}});
+  navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(reg=>{const up=()=>reg.update().catch(()=>{});up();
+    document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")up();});setInterval(up,30*60*1000);}).catch(()=>{});
+}
 })();
 </script>
 
