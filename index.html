@@ -227,6 +227,91 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 .guide-box ol{padding-left:20px;color:var(--ink2);font-size:14px;line-height:1.7}
 .inst-banner{display:flex;align-items:center;gap:10px;margin:12px 0 2px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);font-size:13.5px;color:var(--ink2)}
 .inst-banner b{color:var(--ink)} .inst-banner .x{margin-left:auto;color:var(--ink3);width:28px;height:28px}
+
+/* ===== 불씨 키우기 (character stage) ===== */
+.stage{position:relative;margin-top:18px;border-radius:18px;overflow:hidden;border:1px solid rgba(214,170,90,.35);
+  background:
+   radial-gradient(ellipse 70% 55% at 50% 0%,rgba(255,196,110,.28),transparent 70%),
+   repeating-linear-gradient(90deg,rgba(0,0,0,.42) 0 9px,rgba(255,214,140,.07) 15px,rgba(0,0,0,.28) 24px,rgba(255,214,140,.05) 30px,rgba(0,0,0,.42) 38px),
+   linear-gradient(180deg,#4a3310 0%,#2a1c08 55%,#140d05 100%);
+  box-shadow:inset 0 1px 0 rgba(255,220,150,.25),0 18px 40px rgba(0,0,0,.45)}
+.stage-h{position:relative;z-index:2;display:flex;align-items:center;gap:10px;padding:14px 16px 0}
+.stage-h b{font-family:var(--serif);font-size:16px;color:#f6dfa6;letter-spacing:.02em}
+.stage-h .lvl{margin-left:auto;font-size:12.5px;color:#e8c77e;font-variant-numeric:tabular-nums;white-space:nowrap}
+.evo{position:relative;z-index:2;margin:8px 16px 0;height:6px;border-radius:99px;background:rgba(0,0,0,.45);box-shadow:inset 0 0 0 1px rgba(214,170,90,.3);overflow:hidden}
+.evo i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#b8862f,#f6d58a,#ffb347);box-shadow:0 0 10px rgba(255,190,90,.7);transition:width .6s ease}
+.bubble{position:relative;z-index:2;margin:10px auto 0;width:fit-content;max-width:calc(100% - 32px);padding:7px 13px;border-radius:14px;background:rgba(20,13,5,.72);border:1px solid rgba(214,170,90,.45);color:#f6e6c0;font-size:13px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;transform:translateX(-50%) rotate(45deg);background:rgba(20,13,5,.9);border-right:1px solid rgba(214,170,90,.45);border-bottom:1px solid rgba(214,170,90,.45)}
+.shelf{position:relative;display:flex;align-items:flex-end;gap:2px;padding:6px 6px 10px;margin-top:4px}
+.shelf::before{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;z-index:0;border-top:2px solid #c99a45;box-shadow:0 -1px 0 rgba(255,230,170,.35),inset 0 2px 0 rgba(0,0,0,.4);
+  background:repeating-linear-gradient(118deg,transparent 0 46px,rgba(255,255,255,.05) 46px 47px,transparent 47px 83px,rgba(255,255,255,.035) 83px 84px),linear-gradient(135deg,#1c1c1c,#0a0a0a 45%,#232323 62%,#0b0b0b)}
+.slot{position:relative;z-index:1;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center}
+.slot.cur{flex:1.75}
+.fig{width:100%;position:relative;z-index:2}
+.fig svg{display:block;width:100%;height:auto;overflow:visible}
+.slot.lock .fig{filter:brightness(.12) saturate(0);opacity:.55}
+.slot.past .fig{filter:saturate(.85) brightness(.85)}
+.ped{position:relative;width:78%;height:20px;margin-top:-10px;border-radius:0 0 12px 12px/0 0 7px 7px;background:linear-gradient(180deg,#2e2e2e,#0e0e0e);box-shadow:inset 0 -1px 0 #c99a45}
+.ped::before{content:"";position:absolute;left:0;right:0;top:-7px;height:14px;border-radius:50%;background:radial-gradient(ellipse at 50% 35%,#4a4a4a,#171717 70%);box-shadow:inset 0 0 0 1.5px #c99a45,0 1px 0 rgba(0,0,0,.6)}
+.slot.cur .ped::after{content:"";position:absolute;left:-12%;right:-12%;top:-11px;height:22px;border-radius:50%;border:2px solid #ffc861;box-shadow:0 0 14px 3px rgba(255,190,80,.75),inset 0 0 10px rgba(255,190,80,.6);animation:ring 2.4s ease-in-out infinite}
+@keyframes ring{50%{box-shadow:0 0 22px 6px rgba(255,190,80,.95),inset 0 0 14px rgba(255,190,80,.8);border-color:#fff0c0}}
+.plate{margin-top:10px;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:700;color:#3a2508;white-space:nowrap;background:linear-gradient(180deg,#fbe6a6,#d8a94c 55%,#a8782b);box-shadow:0 1px 0 rgba(255,240,200,.6) inset,0 2px 4px rgba(0,0,0,.6);letter-spacing:.02em}
+.slot.lock .plate{filter:grayscale(.7) brightness(.55)}
+.slot.cur .plate{box-shadow:0 0 10px rgba(255,200,90,.8),0 1px 0 rgba(255,240,200,.6) inset}
+/* character animations */
+.fig .fc-anim,.fig .fc-wings,.fig .fc-arm-l,.fig .fc-arm-r,.fig .fc-eyes,.fig .fc-tear,.fig .fc-z1,.fig .fc-z2,.fig .fc-sparkle,.fig .fc-burst,.fig .fc-cloud,.fig .fc-glow,.fig .fc-crown,.fig .fc-flag,.fig .fc-shadow,.fig [id]{transform-box:fill-box}
+.fig .fc-anim{transform-origin:50% 100%}
+.fig.base .fc-anim{animation:fcBob 3s ease-in-out infinite}
+.fig.base .fc-eyes,.fig.cheer .fc-eyes{transform-origin:50% 50%;animation:fcBlink 4.5s infinite}
+.fig .fc-w{transform-box:fill-box;transform-origin:100% 90%;animation:fcFlap 1.6s ease-in-out infinite}
+.fig .fc-glow{transform-origin:50% 50%;animation:fcGlow 2.6s ease-in-out infinite}
+.fig .fc-crown{transform-origin:50% 100%;animation:fcBob 2.2s ease-in-out infinite}
+.fig .fc-flag{transform-origin:0% 100%;animation:fcFlag 2s ease-in-out infinite}
+.fig.joy .fc-anim{animation:fcJump .9s cubic-bezier(.3,.7,.4,1) infinite}
+.fig.joy .fc-arm-l{transform-origin:100% 100%;animation:fcWaveL .45s ease-in-out infinite alternate}
+.fig.joy .fc-arm-r{transform-origin:0% 100%;animation:fcWaveR .45s ease-in-out infinite alternate}
+.fig.joy .fc-sparkle>path{transform-origin:50% 50%;animation:fcTwinkle 1.1s ease-in-out infinite}
+.fig.joy .fc-sparkle>path:nth-child(4n){animation-delay:.35s}
+.fig.cheer .fc-anim{animation:fcPump .7s ease-in-out infinite}
+.fig.cheer .fc-arm-r{transform-origin:20% 100%;animation:fcFist .35s ease-in-out infinite alternate}
+.fig.cheer .fc-burst{animation:fcBurst .7s ease-in-out infinite}
+.fig.sleepy .fc-anim{animation:fcNod 3.2s ease-in-out infinite}
+.fig.sleepy .fc-z1{animation:fcZ 2.6s ease-in infinite}
+.fig.sleepy .fc-z2{animation:fcZ 2.6s ease-in 1.3s infinite}
+.fig.sleepy .fc-w{animation-duration:3.4s}
+.fig.sad .fc-anim{animation:fcSad 2.4s ease-in-out infinite}
+.fig.sad .fc-tear{animation:fcTear 1.8s ease-in infinite}
+.fig.sad .fc-cloud{animation:fcCloud 3s ease-in-out infinite}
+.fig.sad .fc-w{animation:none;transform:rotate(-8deg)}
+.slot:not(.cur) .fig *{animation:none!important}
+@keyframes fcBob{50%{transform:translateY(-4%)}}
+@keyframes fcBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes fcFlap{50%{transform:rotate(-12deg)}}
+@keyframes fcGlow{50%{opacity:.55;transform:scale(1.08)}}
+@keyframes fcFlag{50%{transform:skewY(-6deg) scaleX(.94)}}
+@keyframes fcJump{0%,100%{transform:translateY(0) scale(1.04,.96)}40%{transform:translateY(-16%) scale(.97,1.04)}70%{transform:translateY(-4%)}}
+@keyframes fcWaveL{from{transform:rotate(10deg)}to{transform:rotate(-25deg)}}
+@keyframes fcWaveR{from{transform:rotate(-10deg)}to{transform:rotate(25deg)}}
+@keyframes fcTwinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.15) rotate(20deg);opacity:1}}
+@keyframes fcPump{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6%) rotate(2deg)}}
+@keyframes fcFist{from{transform:rotate(0) translateY(0)}to{transform:rotate(-12deg) translateY(-6%)}}
+@keyframes fcBurst{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes fcNod{0%,100%{transform:rotate(0) translateY(0)}40%{transform:rotate(-5deg) translateY(2%)}60%{transform:rotate(-6deg) translateY(3%)}}
+@keyframes fcZ{0%{opacity:0;transform:translate(0,0) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(10%,-40%) scale(1.2)}}
+@keyframes fcSad{0%,100%{transform:translateY(2%) rotate(0)}25%{transform:translateY(2%) rotate(-2deg)}75%{transform:translateY(2%) rotate(2deg)}}
+@keyframes fcTear{0%{opacity:0;transform:translateY(-20%)}20%{opacity:1}100%{opacity:0;transform:translateY(90%)}}
+@keyframes fcCloud{50%{transform:translateX(-8%)}}
+/* run controls on task rows */
+.runb{display:flex;gap:4px;flex:none;align-items:center}
+.rb{height:28px;padding:0 9px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink2)}
+.rb:hover{background:rgba(255,255,255,.1)}
+.rb.go{border-color:color-mix(in srgb,var(--accent) 55%,transparent);background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)}
+.rb.stop{color:#e8c77e}
+.rb.quit{color:#e98a7a}
+.meta .run{color:var(--accent);font-weight:600}.meta .run.p{color:#e8c77e}.meta .run.q{color:#e98a7a}
+.task.running{background:color-mix(in srgb,var(--accent) 8%,transparent);box-shadow:inset 3px 0 0 var(--accent)}
+.task.gaveup .tt{color:var(--ink3)}
+@media (max-width:640px){.rb{padding:0 8px;font-size:12px}.task .star{width:30px}.slot.cur{flex:2.6}.plate{font-size:10px;padding:2px 5px}.shelf{gap:0;padding:4px 2px 10px}}
 #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:95}
 
 @media (max-width: 980px){
@@ -278,6 +363,26 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
       <div id="instBanner"></div>
       <div class="chips" id="stats"></div>
       <div id="sections"></div>
+      <div id="stage" class="stage" aria-label="불씨 키우기"></div>
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<radialGradient id="fcRed" cx="0.36" cy="0.26" r="0.82"><stop offset="0" stop-color="#FF7A80"/><stop offset="0.22" stop-color="#DA3444"/><stop offset="0.6" stop-color="#A5172A"/><stop offset="1" stop-color="#5E0A16"/></radialGradient>
+<linearGradient id="fcGold" x1="0.1" y1="0" x2="0.9" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset="0.22" stop-color="#F8D57A"/><stop offset="0.45" stop-color="#E8AE45"/><stop offset="0.62" stop-color="#F6CD6A"/><stop offset="0.85" stop-color="#C8902F"/><stop offset="1" stop-color="#9A6620"/></linearGradient>
+<linearGradient id="fcGoldShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#7A4A10" stop-opacity="0"/><stop offset="1" stop-color="#7A4A10" stop-opacity="0.45"/></linearGradient>
+<linearGradient id="fcWing" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset="0.45" stop-color="#F4C75A"/><stop offset="1" stop-color="#B8802A"/></linearGradient>
+<linearGradient id="fcWingHi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/><stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<linearGradient id="fcRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="0.5" stop-color="#D19A38"/><stop offset="1" stop-color="#8A5A1C"/></linearGradient>
+<linearGradient id="fcStrap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5424"/><stop offset="1" stop-color="#4E2208"/></linearGradient>
+<radialGradient id="fcLens" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.35" stop-color="#CDEFF5"/><stop offset="1" stop-color="#5E9AAA"/></radialGradient>
+<radialGradient id="fcEye" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6A4232"/><stop offset="1" stop-color="#1A0A05"/></radialGradient>
+<radialGradient id="fcCheek" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF7F78" stop-opacity="0.95"/><stop offset="0.6" stop-color="#F58A80" stop-opacity="0.55"/><stop offset="1" stop-color="#F58A80" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcHi" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcShadow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000000" stop-opacity="0.55"/><stop offset="0.6" stop-color="#000000" stop-opacity="0.22"/><stop offset="1" stop-color="#000000" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE6A0" stop-opacity="0.55"/><stop offset="0.6" stop-color="#FFC75A" stop-opacity="0.18"/><stop offset="1" stop-color="#FFC75A" stop-opacity="0"/></radialGradient>
+<linearGradient id="fcFlag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFA24A"/><stop offset="1" stop-color="#D4501C"/></linearGradient>
+<linearGradient id="fcRibbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#48B4C8"/><stop offset="1" stop-color="#1D6676"/></linearGradient>
+<radialGradient id="fcTear" cx="0.4" cy="0.6" r="0.7"><stop offset="0" stop-color="#D8F2FF"/><stop offset="1" stop-color="#4FA8DA"/></radialGradient>
+<linearGradient id="fcCloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B4B8C6"/><stop offset="1" stop-color="#6C7080"/></linearGradient>
+</defs></svg>
       
     </section>
 
@@ -384,7 +489,7 @@ function streak(){const days=new Set(all().filter(t=>t.done&&t.doneAt).map(t=>ym
 
 function render(){
   document.documentElement.dataset.accent=S.prefs.accent||"lantern";
-  renderHead();renderStats();renderSections();renderCal();renderSheet();renderPop();renderView();renderBrand();
+  renderHead();renderStats();renderSections();renderStage();renderCal();renderSheet();renderPop();renderView();renderBrand();
 }
 function renderHead(){
   $("#eyebrow").textContent=new Date().getFullYear()+" · 오늘";
@@ -400,6 +505,203 @@ function renderStats(){
   const left=all().filter(t=>!t.done).length,up=all().filter(t=>!t.done&&t.due&&t.due>T()&&t.due<=addDays(T(),7)).length;
   $("#stats").innerHTML='<span class="chip stat fire">🔥 <b>'+n+'</b>일 연속 달성</span><span class="chip stat">이번 주 완료 <b>'+wk+'</b></span><span class="chip stat">7일 내 일정 <b>'+up+'</b></span><span class="chip stat">남은 일 <b>'+left+'</b></span>';
 }
+// 불꽃 캐릭터 SVG 빌더 — 피그마와 앱에서 같은 형태를 공유
+// level: 1~5, expr: 'base' | 'joy' | 'cheer' | 'sleepy' | 'sad'
+// opts.rich: true면 입체 버전(에나멜 빨강 + 브러시드 골드 + 두께 + 하이라이트). flameDefs()의 <defs>가 문서에 있어야 함
+// 필터 없이 그라데이션만 써서 피그마 SVG 가져오기에서도 그대로 재현됨
+function flameCharacter(level, expr, opts) {
+  opts = opts || {};
+  const rich = !!opts.rich;
+  const C = { red:'#A8182A', redDark:'#5E0A16', redDeep:'#44060F', gold:'#F2B84B', goldDark:'#B07A28', goldDeep:'#7E5217', eye:'#2A140C', cheek:'#F08A7A', mouth:'#5A1414', tongue:'#E8606A', wing:'#F7CF5A', flag:'#F07A2A', ribbon:'#2E8FA3', lens:'#BFE3EA', strap:'#6A3312', tear:'#7EC8F2', zz:'#8FA7D9' };
+  const F = rich
+    ? { red:'url(#fcRed)', gold:'url(#fcGold)', wing:'url(#fcWing)', eye:'url(#fcEye)', cheek:'url(#fcCheek)', lens:'url(#fcLens)', strap:'url(#fcStrap)', flag:'url(#fcFlag)', ribbon:'url(#fcRibbon)', shadow:'url(#fcShadow)', glow:'url(#fcGlow)', rim:'url(#fcRim)' }
+    : { red:C.red, gold:C.gold, wing:C.wing, eye:C.eye, cheek:C.cheek, lens:C.lens, strap:C.strap, flag:C.flag, ribbon:C.ribbon, shadow:'#000000', glow:'#FFD27A', rim:C.goldDark };
+  const hi = (cx, cy, rx, ry, rot, op) => rich ? `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})" fill="url(#fcHi)" opacity="${op}"/>` : '';
+  const star = (cx, cy, R, r) => { let d=''; for (let i=0;i<10;i++){ const a=-Math.PI/2+i*Math.PI/5; const rad=i%2?r:R; d+=(i?'L':'M')+(cx+rad*Math.cos(a)).toFixed(1)+' '+(cy+rad*Math.sin(a)).toFixed(1)+' '; } return d+'Z'; };
+  const starObj = (id, cx, cy, R, r) => (rich ? `<path d="${star(cx, cy + 2, R, r)}" fill="${C.goldDeep}"/>` : '') +
+    `<path id="${id}" d="${star(cx, cy, R, r)}" fill="${F.wing}" stroke="${C.goldDark}" stroke-width="1.6" stroke-linejoin="round"/>` + hi(cx - R * 0.25, cy - R * 0.3, R * 0.3, R * 0.18, -30, 0.9);
+
+  // 날개: 두께 + 깃털 결 + 광택
+  const smallWingL = 'M66 150 C40 138 28 116 32 98 C46 112 56 118 70 132 Z';
+  const bigWingL = 'M66 150 C30 150 6 120 4 78 C20 94 34 99 48 101 C36 108 40 122 54 128 C44 132 50 142 66 140 Z';
+  const smallFeathers = 'M60 140 C50 132 42 122 38 110 M64 132 C58 126 52 120 48 112';
+  const bigFeathers = 'M60 146 C38 140 22 118 14 94 M56 136 C44 128 34 116 28 104 M58 128 C52 122 48 116 44 108';
+  const wingOne = (p, f, id, flip) => {
+    const t = flip ? ' transform="translate(240 0) scale(-1 1)"' : '';
+    return `<g id="${id}"${t}><g class="fc-w">` +
+      (rich ? `<path d="${p}" transform="translate(0 4)" fill="${C.goldDeep}"/>` : '') +
+      `<path d="${p}" fill="${F.wing}" stroke="${C.goldDark}" stroke-width="2.5" stroke-linejoin="round"/>` +
+      (rich ? `<path d="${f}" stroke="${C.goldDark}" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.7"/>` + `<path d="${p}" fill="url(#fcWingHi)"/>` : '') + '</g></g>';
+  };
+  const wings = (p, f) => `<g id="날개" class="fc-wings">${wingOne(p, f, '날개-왼쪽', false)}${wingOne(p, f, '날개-오른쪽', true)}</g>`;
+
+  const goggles = `<g id="고글"><path id="고글-끈" d="M72 124 L168 124" stroke="${F.strap}" stroke-width="6" stroke-linecap="round"/>` +
+    [[106, '고글-왼쪽'], [134, '고글-오른쪽']].map(([x, id]) =>
+      (rich ? `<circle cx="${x}" cy="124" r="12" fill="${C.goldDeep}"/>` : '') +
+      `<circle id="${id}" cx="${x}" cy="122" r="11" fill="${F.lens}" stroke="${F.rim}" stroke-width="4.5"/>` +
+      (rich ? `<path d="M${x - 7} ${119} A8 8 0 0 1 ${x + 1} ${113}" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.9"/><circle cx="${x + 5}" cy="127" r="1.6" fill="#FFFFFF" opacity="0.8"/>` : '')
+    ).join('') + `</g>`;
+  const medal = `<g id="메달"><path id="메달-리본" d="M142 186 L150 202 L158 186 Z" fill="${F.ribbon}"/>` +
+    (rich ? `<circle cx="150" cy="206" r="9.5" fill="${C.goldDeep}"/>` : '') +
+    `<circle id="메달-원" cx="150" cy="204" r="9.5" fill="${F.wing}" stroke="${C.goldDark}" stroke-width="2"/>` +
+    (rich ? `<path d="${star(150, 204, 5, 2.2)}" fill="${C.goldDark}" opacity="0.8"/>` + hi(146.5, 200.5, 3, 1.8, -30, 0.95) : '') + `</g>`;
+  const crown = `<g id="별-왕관" class="fc-crown">${starObj('별-가운데', 120, 20, 11, 5)}${starObj('별-왼쪽', 94, 32, 8, 3.6)}${starObj('별-오른쪽', 146, 32, 8, 3.6)}</g>`;
+  const flag = `<g id="깃발" class="fc-flag"><path id="깃대" d="M194 112 L194 226" stroke="${F.rim}" stroke-width="4.5" stroke-linecap="round"/>` +
+    (rich ? `<circle cx="194" cy="110" r="4" fill="${F.wing}" stroke="${C.goldDark}" stroke-width="1.2"/>` : '') +
+    `<path id="깃발-천" d="M196 114 C210 116 222 120 234 124 C222 128 208 132 196 138 Z" fill="${F.flag}" stroke="${C.redDark}" stroke-width="1.8" stroke-linejoin="round"/>` +
+    (rich ? `<path d="${star(209, 125, 4.5, 2)}" fill="${C.wing}"/>` : '') + `</g>`;
+  const glow = `<ellipse id="후광" class="fc-glow" cx="120" cy="140" rx="116" ry="108" fill="${F.glow}" opacity="${rich ? 1 : 0.28}"/>`;
+
+  // 팔
+  const limb = (id, cx, cy, rx, ry, rot, cls) => `<g id="${id}"${cls ? ` class="${cls}"` : ''}>` +
+    (rich ? `<ellipse cx="${cx}" cy="${cy + 3}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy + 3})" fill="${C.redDeep}"/>` : '') +
+    `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})" fill="${F.red}" stroke="${C.redDark}" stroke-width="2.5"/>` +
+    hi(cx - rx * 0.25, cy - ry * 0.4, rx * 0.35, ry * 0.3, rot, 0.55) + `</g>`;
+  const armsDown = limb('팔-왼쪽', 62, 176, 10, 16, 30, 'fc-arm-l') + limb('팔-오른쪽', 178, 176, 10, 16, -30, 'fc-arm-r');
+  const armsUp = limb('팔-왼쪽', 56, 146, 10, 17, -35, 'fc-arm-l') + limb('팔-오른쪽', 184, 146, 10, 17, 35, 'fc-arm-r');
+  const armsCheer = limb('팔-왼쪽', 62, 176, 10, 16, 30, 'fc-arm-l');
+  // 응원: 치켜든 주먹은 몸 앞쪽에 그려서 가려지지 않게
+  const cheerFront = `<g id="팔-오른쪽" class="fc-arm-r">${limb('팔', 192, 146, 10, 18, 30, '')}${limb('주먹', 202, 126, 11, 11, 0, '')}</g>`;
+  const armsDroop = limb('팔-왼쪽', 64, 186, 9, 15, 12, 'fc-arm-l') + limb('팔-오른쪽', 176, 186, 9, 15, -12, 'fc-arm-r');
+  const arms = { base:armsDown, joy:armsUp, cheer:armsCheer, sleepy:armsDroop, sad:armsDroop }[expr];
+
+  // 얼굴
+  const cheeks = (op) => rich
+    ? `<ellipse id="볼-왼쪽" cx="88" cy="176" rx="12" ry="8" fill="${F.cheek}" opacity="${op}"/><ellipse id="볼-오른쪽" cx="152" cy="176" rx="12" ry="8" fill="${F.cheek}" opacity="${op}"/>`
+    : `<ellipse id="볼-왼쪽" cx="88" cy="176" rx="9" ry="6" fill="${C.cheek}" opacity="${op}"/><ellipse id="볼-오른쪽" cx="152" cy="176" rx="9" ry="6" fill="${C.cheek}" opacity="${op}"/>`;
+  const eye = (id, cx, cy, rx, ry) => `<ellipse id="${id}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="${F.eye}"/>` +
+    `<circle cx="${cx + rx * 0.35}" cy="${cy - ry * 0.4}" r="${rx * 0.4}" fill="#FFFFFF"/>` +
+    (rich ? `<circle cx="${cx - rx * 0.35}" cy="${cy + ry * 0.45}" r="${rx * 0.18}" fill="#FFFFFF" opacity="0.8"/>` : '');
+  const openEyes = `<g id="눈" class="fc-eyes">${eye('눈-왼쪽', 102, 158, 5.5, 7.5)}${eye('눈-오른쪽', 138, 158, 5.5, 7.5)}</g>`;
+  const brow = (l, r) => `<path id="눈썹-왼쪽" d="${l}" stroke="${C.eye}" stroke-width="3.5" stroke-linecap="round" fill="none"/><path id="눈썹-오른쪽" d="${r}" stroke="${C.eye}" stroke-width="3.5" stroke-linecap="round" fill="none"/>`;
+  const mouthFill = (id, d) => `<path id="${id}" d="${d}" fill="${C.mouth}" stroke="${C.mouth}" stroke-width="2" stroke-linejoin="round"/>`;
+  const faces = {
+    base: brow('M94 142 L109 147','M146 142 L131 147') + openEyes + cheeks(0.85) +
+      `<g id="입">${mouthFill('입-미소', 'M108 172 Q120 192 132 172 Z')}${rich ? '<ellipse cx="120" cy="182" rx="5" ry="3" fill="#E8606A"/>' : ''}</g>`,
+    joy: brow('M94 140 Q101 135 108 139','M146 140 Q139 135 132 139') +
+      `<g id="눈" class="fc-eyes"><path id="눈-왼쪽" d="M95 161 Q102 150 109 161" stroke="${C.eye}" stroke-width="4" stroke-linecap="round" fill="none"/><path id="눈-오른쪽" d="M131 161 Q138 150 145 161" stroke="${C.eye}" stroke-width="4" stroke-linecap="round" fill="none"/></g>` + cheeks(1) +
+      `<g id="입">${mouthFill('입-벌림', 'M104 170 Q120 200 136 170 Z')}<ellipse id="혀" cx="120" cy="186" rx="7" ry="4.5" fill="${C.tongue}"/></g>`,
+    cheer: brow('M92 140 L110 148','M148 140 L130 148') + openEyes + cheeks(0.9) +
+      `<g id="입"><ellipse id="입-외침" cx="120" cy="180" rx="9" ry="10" fill="${C.mouth}"/><ellipse id="혀" cx="120" cy="186" rx="5" ry="3" fill="${C.tongue}"/></g>`,
+    sleepy: brow('M94 146 L108 146','M146 146 L132 146') +
+      `<g id="눈" class="fc-eyes"><path id="눈-왼쪽" d="M95 158 Q102 164 109 158" stroke="${C.eye}" stroke-width="3.5" stroke-linecap="round" fill="none"/><path id="눈-오른쪽" d="M131 158 Q138 164 145 158" stroke="${C.eye}" stroke-width="3.5" stroke-linecap="round" fill="none"/></g>` + cheeks(0.6) +
+      `<ellipse id="입" cx="120" cy="180" rx="5" ry="6" fill="${C.mouth}"/>`,
+    sad: brow('M94 148 L108 142','M146 148 L132 142') +
+      `<g id="눈" class="fc-eyes">${eye('눈-왼쪽', 102, 162, 4.5, 6)}${eye('눈-오른쪽', 138, 162, 4.5, 6)}</g>` + cheeks(0.5) +
+      `<path id="입" d="M110 184 Q120 174 130 184" stroke="${C.mouth}" stroke-width="3.5" stroke-linecap="round" fill="none"/>` +
+      `<g id="눈물" class="fc-tear"><path d="M92 166 C92 166 86 174 86 178 C86 181.5 89 184 92 184 C95 184 98 181.5 98 178 C98 174 92 166 92 166 Z" fill="${rich ? 'url(#fcTear)' : C.tear}"/>${rich ? '<ellipse cx="90" cy="177" rx="1.4" ry="2.6" fill="#FFFFFF" opacity="0.9"/>' : ''}</g>`
+  };
+  const extras = {
+    base: '',
+    joy: `<g id="반짝이" class="fc-sparkle">${starObj('반짝-1', 40, 70, 9, 3)}${starObj('반짝-2', 206, 78, 7, 2.5)}${starObj('반짝-3', 28, 120, 6, 2)}</g>`,
+    cheer: `<g id="응원선" class="fc-burst" stroke="${C.gold}" stroke-width="3.5" stroke-linecap="round"><path d="M218 110 L232 102"/><path d="M220 128 L234 130"/><path d="M212 96 L216 82"/></g>`,
+    sleepy: `<g id="졸음" class="fc-zzz" stroke="${C.zz}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"><path class="fc-z1" d="M168 92 L180 92 L168 104 L180 104"/><path class="fc-z2" d="M188 70 L204 70 L188 86 L204 86"/></g>`,
+    sad: `<g id="먹구름" class="fc-cloud"><path d="M168 80 a12 12 0 0 1 22 -6 a10 10 0 0 1 18 8 a9 9 0 0 1 -4 17 h-34 a10 10 0 0 1 -2 -19 Z" fill="${rich ? 'url(#fcCloud)' : '#8C8F9E'}" opacity="0.92"/></g>`
+  };
+
+  const lv = [null,
+    { s:0.62, back:'', front:'' },
+    { s:0.72, back:wings(smallWingL, smallFeathers), front:'' },
+    { s:0.82, back:wings(smallWingL, smallFeathers), front:goggles },
+    { s:0.92, back:wings(bigWingL, bigFeathers), front:goggles+medal },
+    { s:1.0, back:glow+wings(bigWingL, bigFeathers), front:goggles+medal+crown+flag }][level];
+
+  const OUTER = 'M120 40 C135 65 150 70 158 95 C165 88 168 80 168 72 C190 100 195 130 190 160 C185 200 158 225 120 225 C82 225 55 200 50 160 C46 130 60 108 72 95 C74 110 80 118 88 122 C88 90 100 65 120 40 Z';
+  const INNER = 'M120 78 C130 96 142 104 150 112 C165 124 172 142 172 165 C172 198 150 215 120 215 C90 215 68 198 68 165 C68 142 76 124 92 112 C100 104 110 96 120 78 Z';
+  const foot = (id, cx) => `<g id="${id}">` + (rich ? `<ellipse cx="${cx}" cy="229" rx="13" ry="8" fill="${C.redDeep}"/>` : '') +
+    `<ellipse cx="${cx}" cy="226" rx="13" ry="8" fill="${F.red}" stroke="${C.redDark}" stroke-width="2.5"/>` + hi(cx - 4, 222.5, 5, 2.2, 0, 0.6) + `</g>`;
+  const body = `<g id="몸" class="fc-body">${arms}${foot('발-왼쪽', 102)}${foot('발-오른쪽', 138)}` +
+    (rich ? `<path id="불꽃-두께" d="${OUTER}" transform="translate(0 6)" fill="${C.redDeep}"/>` : '') +
+    `<path id="불꽃-바깥" class="fc-flame" d="${OUTER}" fill="${F.red}" stroke="${C.redDark}" stroke-width="${rich ? 3 : 4}" stroke-linejoin="round"/>` +
+    (rich ? `<g id="불꽃-광택">` + hi(84, 128, 9, 28, 22, 0.6) + hi(117, 62, 3.5, 11, 18, 0.85) + hi(164, 108, 3, 9, -20, 0.45) +
+      `<path d="M186 150 C186 184 166 214 128 222" stroke="#FF9AA0" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.45"/></g>` +
+      `<path id="얼굴판-두께" d="${INNER}" transform="translate(0 3.5)" fill="${C.goldDeep}"/>` : '') +
+    `<path id="불꽃-안쪽" d="${INNER}" fill="${F.gold}"${rich ? ` stroke="${C.goldDark}" stroke-width="1.5"` : ''}/>` +
+    (rich ? `<path id="얼굴판-음영" d="${INNER}" fill="url(#fcGoldShade)"/>` +
+      `<path id="얼굴판-테두리광" d="M78 150 C82 128 98 110 118 96" stroke="#FFF6D6" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.85"/>` +
+      hi(98, 132, 20, 11, -25, 0.55) : '') +
+    `</g>`;
+  const tf = `translate(120 238) scale(${lv.s}) translate(-120 -234)`;
+  const shadow = rich
+    ? `<ellipse id="그림자" class="fc-shadow" cx="120" cy="245" rx="${(66 * lv.s).toFixed(1)}" ry="${(9 * lv.s + 2).toFixed(1)}" fill="${F.shadow}"/>`
+    : `<ellipse id="그림자" class="fc-shadow" cx="120" cy="244" rx="${(52 * lv.s).toFixed(1)}" ry="6" fill="#000000" opacity="0.12"/>`;
+  return `${shadow}
+<g id="캐릭터" transform="${tf}"><g class="fc-anim">${lv.back}${body}<g id="얼굴" class="fc-face">${faces[expr]}</g>${lv.front}${expr === 'cheer' ? cheerFront : ''}${extras[expr]}</g></g>`;
+}
+
+function flameDefs() {
+  return `<defs>
+<radialGradient id="fcRed" cx="0.36" cy="0.26" r="0.82"><stop offset="0" stop-color="#FF7A80"/><stop offset="0.22" stop-color="#DA3444"/><stop offset="0.6" stop-color="#A5172A"/><stop offset="1" stop-color="#5E0A16"/></radialGradient>
+<linearGradient id="fcGold" x1="0.1" y1="0" x2="0.9" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset="0.22" stop-color="#F8D57A"/><stop offset="0.45" stop-color="#E8AE45"/><stop offset="0.62" stop-color="#F6CD6A"/><stop offset="0.85" stop-color="#C8902F"/><stop offset="1" stop-color="#9A6620"/></linearGradient>
+<linearGradient id="fcGoldShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#7A4A10" stop-opacity="0"/><stop offset="1" stop-color="#7A4A10" stop-opacity="0.45"/></linearGradient>
+<linearGradient id="fcWing" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset="0.45" stop-color="#F4C75A"/><stop offset="1" stop-color="#B8802A"/></linearGradient>
+<linearGradient id="fcWingHi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/><stop offset="0.35" stop-color="#FFFFFF" stop-opacity="0"/></linearGradient>
+<linearGradient id="fcRim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A8"/><stop offset="0.5" stop-color="#D19A38"/><stop offset="1" stop-color="#8A5A1C"/></linearGradient>
+<linearGradient id="fcStrap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9A5424"/><stop offset="1" stop-color="#4E2208"/></linearGradient>
+<radialGradient id="fcLens" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#FFFFFF"/><stop offset="0.35" stop-color="#CDEFF5"/><stop offset="1" stop-color="#5E9AAA"/></radialGradient>
+<radialGradient id="fcEye" cx="0.4" cy="0.3" r="0.8"><stop offset="0" stop-color="#6A4232"/><stop offset="1" stop-color="#1A0A05"/></radialGradient>
+<radialGradient id="fcCheek" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FF7F78" stop-opacity="0.95"/><stop offset="0.6" stop-color="#F58A80" stop-opacity="0.55"/><stop offset="1" stop-color="#F58A80" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcHi" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcShadow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000000" stop-opacity="0.55"/><stop offset="0.6" stop-color="#000000" stop-opacity="0.22"/><stop offset="1" stop-color="#000000" stop-opacity="0"/></radialGradient>
+<radialGradient id="fcGlow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFE6A0" stop-opacity="0.55"/><stop offset="0.6" stop-color="#FFC75A" stop-opacity="0.18"/><stop offset="1" stop-color="#FFC75A" stop-opacity="0"/></radialGradient>
+<linearGradient id="fcFlag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFA24A"/><stop offset="1" stop-color="#D4501C"/></linearGradient>
+<linearGradient id="fcRibbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#48B4C8"/><stop offset="1" stop-color="#1D6676"/></linearGradient>
+<radialGradient id="fcTear" cx="0.4" cy="0.6" r="0.7"><stop offset="0" stop-color="#D8F2FF"/><stop offset="1" stop-color="#4FA8DA"/></radialGradient>
+<linearGradient id="fcCloud" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B4B8C6"/><stop offset="1" stop-color="#6C7080"/></linearGradient>
+</defs>`;
+}
+
+
+
+/* ===== 불씨 키우기 ===== */
+const LV_NAME=["","불씨","불꽃","횃불","날개불꽃","전설의 불꽃"];
+const MSG={
+  base:["오늘도 같이 불태워 볼까요?","할 일을 시작하면 응원할게요!","하나씩 끝낼 때마다 제가 자라요"],
+  cheer:["화이팅! 지금 집중하는 거 멋져요 🔥","좋아요, 그 기세 그대로!","할 수 있어요! 끝까지 가요!"],
+  joy:["해냈다! 정말 잘했어요 ✨","최고예요! 불꽃이 더 커졌어요","완료! 이 느낌 그대로 다음도 가요"],
+  sleepy:["음냐… 1시간이 넘었어요. 잠깐 쉬어갈까요?","졸려요… 스트레칭 한 번 하고 다시 가요","쿨… 물 한 잔 마시고 오세요"],
+  sad:["괜찮아요, 다시 하면 돼요","조금 쉬었다 가도 괜찮아요","다음엔 꼭 같이 해내요"]
+};
+let moodEv=null,moodT=null,stageKey="",prevLv=0;
+function setMood(expr,ms){moodEv={expr,until:Date.now()+(ms||12000),i:Math.floor(Math.random()*3)};clearTimeout(moodT);moodT=setTimeout(()=>{moodEv=null;renderStage();},(ms||12000)+50);renderStage();}
+function todayPct(){const d=all().filter(inToday);return d.length?Math.round(d.filter(x=>x.done).length/d.length*100):0;}
+const lvOf=p=>Math.min(5,1+Math.floor(p/20));
+function curMood(){const now=Date.now();
+  if(moodEv&&moodEv.until>now)return moodEv.expr;
+  const run=all().filter(x=>!x.done&&x.run&&x.run.state==="running");
+  if(run.some(x=>now-(x.run.startedAt||now)>=3600000))return "sleepy";
+  if(run.length)return "cheer";
+  return "base";}
+const clean=svg=>svg.replace(/ id="[^"]*"/g,"");
+function figSVG(lv,expr){return '<svg viewBox="-4 -6 248 258" role="img" aria-label="Lv.'+lv+' '+LV_NAME[lv]+'">'+clean(flameCharacter(lv,expr,{rich:true}))+'</svg>';}
+function renderStage(){
+  const el=$("#stage");if(!el)return;
+  const day=all().filter(inToday),p=todayPct(),lv=lvOf(p),expr=curMood();
+  const next=lv<5?(lv*20):100,need=lv<5?Math.max(0,Math.ceil(next/100*day.length)-day.filter(x=>x.done).length):0;
+  const mi=moodEv&&moodEv.expr===expr?moodEv.i:(new Date().getDate()%3);
+  let msg=!day.length&&expr==="base"?"오늘 할 일을 추가하면 불씨가 자라기 시작해요":MSG[expr][mi%MSG[expr].length];
+  if(expr==="base"&&day.length&&lv<5&&need>0)msg="다음 진화까지 "+need+"개 남았어요!";
+  if(expr==="base"&&p===100)msg="오늘 할 일 완전 정복! 전설의 불꽃이에요 👑";
+  const key=lv+"|"+expr+"|"+p+"|"+msg;if(key===stageKey)return;stageKey=key;
+  const h='<div class="stage-h"><b>🔥 불씨 키우기</b><span class="lvl">Lv.'+lv+' '+LV_NAME[lv]+' · '+p+'%</span></div>'+
+    '<div class="evo" title="20%마다 진화"><i style="width:'+p+'%"></i></div>'+
+    '<div class="bubble" role="status">'+esc(msg)+'</div>'+
+    '<div class="shelf">'+[1,2,3,4,5].map(n=>'<div class="slot '+(n===lv?"cur":n<lv?"past":"lock")+'"><div class="fig '+(n===lv?expr:"base")+'">'+figSVG(n,n===lv?expr:"base")+'</div><div class="ped"></div><div class="plate">Lv. '+n+'</div></div>').join("")+'</div>';
+  el.innerHTML=h;
+  if(prevLv&&lv>prevLv){toast("Lv."+lv+" "+LV_NAME[lv]+"(으)로 진화했어요! 🔥");}
+  prevLv=lv;
+}
+/* run state: start / pause / give up */
+function runAct(id,act){
+  const t=S.tasks.get(id);if(!t)return;const now=Date.now(),r=t.run||{};
+  const spent=(r.spent||0)+(r.state==="running"&&r.startedAt?now-r.startedAt:0);
+  if(act==="start"||act==="resume"||act==="retry"){patch(id,{run:{state:"running",startedAt:now,spent:act==="retry"?0:(r.spent||0)}});setMood("cheer",10000);toast("‘"+t.title+"’ 시작! 응원할게요 🔥");}
+  else if(act==="pause"){patch(id,{run:{state:"paused",startedAt:null,spent}});setMood("sad",12000);toast("잠시 멈췄어요. 언제든 다시 시작해요");}
+  else if(act==="giveup"){patch(id,{run:{state:"gaveup",startedAt:null,spent}});setMood("sad",14000);toast("‘"+t.title+"’ 포기했어요. 괜찮아요, 다음에 다시!",()=>patch(id,{run:r}));}
+}
+const mins=ms=>{const m=Math.floor(ms/60000);return m<60?m+"분":Math.floor(m/60)+"시간 "+(m%60)+"분";};
+setInterval(()=>{if(all().some(x=>x.run&&x.run.state==="running")){renderSections();renderStage();}},30000);
+
 function row(t,ctx){
   const b=[];
   if(t.time)b.push('<span class="tm">🕘 '+t.time+'</span>');
@@ -407,7 +709,15 @@ function row(t,ctx){
   if(t.due&&ctx!=="day"){const late=!t.done&&t.due<T();b.push('<span class="'+(late?"late":t.due===T()?"soon":"")+'">'+I.cal+(late?"지남 · ":"")+fmtShort(t.due)+'</span>');}
   if(t.steps&&t.steps.length){const d=t.steps.filter(s=>s.done).length;b.push('<span>'+I.steps+d+'/'+t.steps.length+'</span>');}
   if(t.note)b.push('<span>'+I.note+'메모</span>');
-  return '<div class="task'+(t.done?" done":"")+'" data-id="'+t.id+'" role="button" tabindex="0" draggable="'+(!t.done)+'"><button type="button" class="check" data-check="'+t.id+'" aria-label="'+(t.done?"완료 취소":"완료하기")+'">'+I.tick+'</button><div class="tb"><div class="tt">'+esc(t.title)+'</div>'+(b.length?'<div class="meta">'+b.join("")+'</div>':'')+'</div><button type="button" class="star" data-star="'+t.id+'" aria-pressed="'+(!!t.star)+'" aria-label="중요">'+(t.star?I.starF:I.star)+'</button></div>';
+  const r=t.run||{},rs=t.done?"":(r.state||"");
+  if(rs==="running")b.unshift('<span class="run">⏱ '+mins(Date.now()-(r.startedAt||Date.now())+(r.spent||0))+' 진행 중</span>');
+  else if(rs==="paused")b.unshift('<span class="run p">⏸ 중단 · '+mins(r.spent||0)+'</span>');
+  else if(rs==="gaveup")b.unshift('<span class="run q">포기함</span>');
+  const ctl=t.done?"":rs==="running"?'<button type="button" class="rb stop" data-run="pause" data-id="'+t.id+'">중단</button><button type="button" class="rb quit" data-run="giveup" data-id="'+t.id+'">포기</button>'
+    :rs==="paused"?'<button type="button" class="rb go" data-run="resume" data-id="'+t.id+'">재개</button><button type="button" class="rb quit" data-run="giveup" data-id="'+t.id+'">포기</button>'
+    :rs==="gaveup"?'<button type="button" class="rb go" data-run="retry" data-id="'+t.id+'">다시</button>'
+    :'<button type="button" class="rb go" data-run="start" data-id="'+t.id+'">▶ 시작</button>';
+  return '<div class="task'+(t.done?" done":"")+(rs==="running"?" running":rs==="gaveup"?" gaveup":"")+'" data-id="'+t.id+'" role="button" tabindex="0" draggable="'+(!t.done)+'"><button type="button" class="check" data-check="'+t.id+'" aria-label="'+(t.done?"완료 취소":"완료하기")+'">'+I.tick+'</button><div class="tb"><div class="tt">'+esc(t.title)+'</div>'+(b.length?'<div class="meta">'+b.join("")+'</div>':'')+'</div><div class="runb">'+ctl+'</div><button type="button" class="star" data-star="'+t.id+'" aria-pressed="'+(!!t.star)+'" aria-label="중요">'+(t.star?I.starF:I.star)+'</button></div>';
 }
 function sec(key,icon,name,items,cls,act){
   if(!items.length)return"";const o=S.open[key]!==false;
@@ -521,9 +831,9 @@ function addTask(raw,date,star){
 function toggleDone(id,el){
   const t=S.tasks.get(id);if(!t)return;
   if(el){el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
-  if(!t.done){burst(el);setTimeout(()=>{patch(id,{done:true,doneAt:Date.now()});
-    let nx=null;if(t.repeat&&REP[t.repeat]){const base=t.due||t.myDay||T();const n={...t,id:uid(),done:false,doneAt:null,due:nextRep(base<T()?T():base,t.repeat),myDay:null,steps:(t.steps||[]).map(s=>({...s,done:false})),createdAt:Date.now(),order:nextO()};nx=n.id;putTask(n);}
-    const undo=()=>{patch(id,{done:false,doneAt:null});if(nx)delTask(nx);};
+  if(!t.done){burst(el);setMood("joy",12000);setTimeout(()=>{const r=t.run||{};patch(id,{done:true,doneAt:Date.now(),run:r.state?{state:"done",spent:(r.spent||0)+(r.state==="running"&&r.startedAt?Date.now()-r.startedAt:0)}:null});
+    let nx=null;if(t.repeat&&REP[t.repeat]){const base=t.due||t.myDay||T();const n={...t,run:null,id:uid(),done:false,doneAt:null,due:nextRep(base<T()?T():base,t.repeat),myDay:null,steps:(t.steps||[]).map(s=>({...s,done:false})),createdAt:Date.now(),order:nextO()};nx=n.id;putTask(n);}
+    const undo=()=>{patch(id,{done:false,doneAt:null,run:t.run||null});if(nx)delTask(nx);};
     const day=all().filter(inToday);
     if(inToday(t)&&day.length&&day.every(x=>x.done))celebrate();else toast("‘"+t.title+"’ 완료!"+(nx?" 다음: "+fmtShort(S.tasks.get(nx).due):""),undo);},170);}
   else patch(id,{done:false,doneAt:null});
@@ -557,6 +867,7 @@ document.addEventListener("submit",e=>{
 });
 document.addEventListener("click",e=>{
   const g=s=>e.target.closest(s);let x;
+  if((x=g("[data-run]"))){e.stopPropagation();runAct(x.dataset.id,x.dataset.run);return;}
   if((x=g("[data-check]"))){e.stopPropagation();toggleDone(x.dataset.check,x);return;}
   if((x=g("[data-star]"))){e.stopPropagation();const t=S.tasks.get(x.dataset.star);if(t)patch(t.id,{star:!t.star});return;}
   if((x=g("[data-step]"))){const t=S.tasks.get(S.selected);S._force=true;patch(t.id,{steps:(t.steps||[]).map(s=>s.id===x.dataset.step?{...s,done:!s.done}:s)});return;}
