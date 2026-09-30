@@ -51,7 +51,19 @@ svg{flex-shrink:0}
 .topbar{position:sticky;top:0;padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);z-index:40;background:rgba(7,10,15,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .topbar-inner{max-width:1280px;margin:0 auto;height:60px;padding:0 20px;display:flex;align-items:center;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.02em}
-.hanko{box-shadow:0 0 16px color-mix(in srgb,var(--accent) 55%,transparent);width:30px;height:30px;border-radius:7px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:15px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)}
+.flame{width:30px;height:30px;display:grid;place-items:center;position:relative;flex:none}
+.flame::before{content:"";position:absolute;inset:2px 4px 0;border-radius:50%;background:radial-gradient(circle at 50% 70%,rgba(255,150,40,.55),transparent 70%);filter:blur(6px);animation:glow 1.6s ease-in-out infinite}
+.flame svg{position:relative;overflow:visible}
+.flame .f1{transform-origin:50% 95%;animation:burn1 .9s ease-in-out infinite alternate}
+.flame .f2{transform-origin:50% 95%;animation:burn2 .7s ease-in-out infinite alternate}
+.flame .f3{transform-origin:50% 95%;animation:burn3 .55s ease-in-out infinite alternate}
+.flame .sp{animation:spark 1.8s linear infinite;opacity:0}
+.flame .sp.b{animation-delay:.9s}
+@keyframes burn1{0%{transform:scale(1,1) skewX(0)}50%{transform:scale(.96,1.06) skewX(3deg)}100%{transform:scale(1.03,.95) skewX(-3deg)}}
+@keyframes burn2{0%{transform:scale(1,1) skewX(-2deg)}100%{transform:scale(.92,1.1) skewX(4deg)}}
+@keyframes burn3{0%{transform:scale(1,.9)}100%{transform:scale(.9,1.12)}}
+@keyframes glow{0%,100%{opacity:.75;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes spark{0%{opacity:0;transform:translate(0,0)}15%{opacity:1}100%{opacity:0;transform:translate(3px,-16px)}}
 .top-actions{margin-left:auto;display:flex;align-items:center;gap:8px;position:relative}
 .sync{font-size:12.5px;color:var(--ink3);display:flex;align-items:center;gap:6px;white-space:nowrap}
 .sync i{width:6px;height:6px;border-radius:50%;background:var(--ink4)} .sync.on i{background:var(--moss)}
@@ -92,7 +104,8 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 .prog .txt{text-align:right;font-size:13px;color:var(--ink3)} .prog .txt b{display:block;color:var(--ink);font-size:18px;font-variant-numeric:tabular-nums}
 .ring{--p:0;width:52px;height:52px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),rgba(255,255,255,.08) 0);display:grid;place-items:center}
 .ring span{width:42px;height:42px;border-radius:50%;background:#0e1218;display:grid;place-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
-.quote{margin:14px 0 6px;font-family:var(--serif);color:var(--ink3);font-size:14px}
+.quote{margin:14px 0 6px;font-family:var(--serif);color:var(--ink2);font-size:14.5px;line-height:1.65}
+.quote cite{display:block;margin-top:3px;font-style:normal;font-family:var(--font);font-size:12px;color:var(--accent);letter-spacing:.02em}
 
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:10px 0 6px}
 .chips::-webkit-scrollbar{display:none}
@@ -240,7 +253,7 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 
 <div class="app">
   <header class="topbar"><div class="topbar-inner">
-    <div class="brand"><span class="hanko" id="hanko">燈</span><span id="brandName">오늘의 할 일</span></div>
+    <div class="brand"><span class="flame" aria-hidden="true"><svg width="26" height="30" viewBox="0 0 26 30"><defs><linearGradient id="fg1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e2461c"/><stop offset=".6" stop-color="#f58a2a"/><stop offset="1" stop-color="#ffb347"/></linearGradient><linearGradient id="fg2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff9a2e"/><stop offset="1" stop-color="#ffd76a"/></linearGradient></defs><path class="f1" fill="url(#fg1)" d="M13 1C14.5 7 21 10 22.5 16.5C24 23 19.5 29 13 29C6.5 29 2 24 3.3 17.5C4.2 13 7.5 11.5 8 8C10 10 10.5 12 10.3 14C13 11 13.5 6 13 1Z"/><path class="f2" fill="url(#fg2)" d="M13.2 11C14 15 18.2 17 18.2 21.5C18.2 25.5 15.8 28 13 28C10.2 28 7.8 25.8 8 22.5C8.2 19.5 10.5 18 11 15.5C12 17 12.3 18 12.2 19.5C13.8 17 14 14 13.2 11Z"/><path class="f3" fill="#fff4c9" d="M13 19C13.8 21.5 15.6 22.5 15.4 25C15.2 27 14.2 28 13 28C11.8 28 10.6 27 10.7 25.2C10.8 23.5 12 22.8 12.3 21.3C12.8 22.3 13.3 21 13 19Z"/><circle class="sp" cx="18" cy="9" r=".9" fill="#ffc15a"/><circle class="sp b" cx="8" cy="12" r=".8" fill="#ffb347"/></svg></span><span id="brandName">오늘의 할 일</span></div>
     <div class="top-actions">
       <div class="sync" id="sync"><i></i><span>연결 중…</span></div>
       <button class="nav-btn" id="navBtn" type="button"></button><button class="icon-btn" id="setBtn" type="button" aria-label="설정"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
@@ -319,7 +332,7 @@ leaf:sv('<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.
 done:sv('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',16),upc:sv('<rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/>',16)};
 const LCOL=["ai","moss","momiji","gold","sakura","ash"];
 const ACC=["lantern","willow","ai","momiji","sakura"];
-const QUOTES=["천 리 길도 한 걸음부터.","급할수록 돌아가라.","도망치지 마라. 네가 질 싸움이 아니다.","대나무는 마디가 있어 곧게 자란다.","달은 서두르지 않지만 매일 제자리에 뜬다.","작은 체크 하나가 하루를 만든다.","고요한 물이 깊다."];
+const QUOTES=[["내게 능력 주시는 자 안에서 내가 모든 것을 할 수 있느니라", "빌립보서 4:13"], ["부지런하여 게으르지 말고 열심을 품고 주를 섬기라", "로마서 12:11"], ["네 속에 있는 하나님의 은사를 다시 불일듯 하게 하기 위하여 생각하게 하노니", "디모데후서 1:6"], ["오직 여호와를 앙망하는 자는 새 힘을 얻으리니 독수리의 날개치며 올라감 같을 것이요 달음박질하여도 곤비치 아니하겠고 걸어가도 피곤치 아니하리로다", "이사야 40:31"], ["푯대를 향하여 그리스도 예수 안에서 하나님이 위에서 부르신 부름의 상을 위하여 좇아가노라", "빌립보서 3:14"], ["우리가 선을 행하되 낙심하지 말지니 피곤하지 아니하면 때가 이르매 거두리라", "갈라디아서 6:9"], ["나는 선한 싸움을 싸우고 나의 달려갈 길을 마치고 믿음을 지켰으니", "디모데후서 4:7"], ["무슨 일을 하든지 마음을 다하여 주께 하듯 하고 사람에게 하듯 하지 말라", "골로새서 3:23"], ["하나님이 우리에게 주신 것은 두려워하는 마음이 아니요 오직 능력과 사랑과 근신하는 마음이니", "디모데후서 1:7"], ["내가 네게 명한 것이 아니냐 마음을 강하게 하고 담대히 하라 두려워 말며 놀라지 말라 네가 어디로 가든지 네 하나님 여호와가 너와 함께 하느니라", "여호수아 1:9"], ["네 시작은 미약하였으나 네 나중은 심히 창대하리라", "욥기 8:7"], ["그러나 이 모든 일에 우리를 사랑하시는 자로 말미암아 우리가 넉넉히 이기느니라", "로마서 8:37"], ["일어나라 빛을 발하라 이는 네 빛이 이르렀고 여호와의 영광이 네 위에 임하였음이니라", "이사야 60:1"], ["깨어 믿음에 굳게 서서 남자답게 강건하여라", "고린도전서 16:13"], ["두려워 말라 내가 너와 함께 함이니라 놀라지 말라 나는 네 하나님이 됨이니라 내가 너를 굳세게 하리라", "이사야 41:10"], ["그런즉 너희는 마음을 강하게 하라 너희 손이 약하지 않게 하라 너희 행위에는 상급이 있음이니라", "역대하 15:7"], ["너의 행사를 여호와께 맡기라 그리하면 너의 경영하는 것이 이루리라", "잠언 16:3"], ["그러므로 너희 담대함을 버리지 말라 이것이 큰 상을 얻느니라", "히브리서 10:35"], ["눈물을 흘리며 씨를 뿌리는 자는 기쁨으로 거두리로다", "시편 126:5"], ["성령을 소멸치 말며", "데살로니가전서 5:19"], ["게으른 자는 마음으로 원하여도 얻지 못하나 부지런한 자의 마음은 풍족함을 얻느니라", "잠언 13:4"], ["그러므로 우리가 낙심하지 아니하노니 겉사람은 후패하나 우리의 속은 날로 새롭도다", "고린도후서 4:16"], ["이는 힘으로 되지 아니하며 능으로 되지 아니하고 오직 나의 신으로 되느니라", "스가랴 4:6"], ["세상에서는 너희가 환난을 당하나 담대하라 내가 세상을 이기었노라", "요한복음 16:33"], ["너희는 세상의 빛이라 산 위에 있는 동네가 숨기우지 못할 것이요", "마태복음 5:14"], ["너희 속에 착한 일을 시작하신 이가 그리스도 예수의 날까지 이루실 줄을 우리가 확신하노라", "빌립보서 1:6"], ["그러므로 피곤한 손과 연약한 무릎을 일으켜 세우고", "히브리서 12:12"], ["운동장에서 달음질하는 자들이 다 달아날찌라도 오직 상 얻는 자는 하나인줄을 너희가 알지 못하느냐 너희도 얻도록 이와 같이 달음질하라", "고린도전서 9:24"], ["너희는 마음을 강하게 하라 담대히 하라 그들을 두려워 말라 떨지 말라 이는 네 하나님 여호와 그가 너와 함께 행하시며 결코 너를 떠나지 아니하시며 버리지 아니하실 것임이니라", "신명기 31:6"], ["그러므로 내 사랑하는 형제들아 견고하며 흔들리지 말며 항상 주의 일에 더욱 힘쓰는 자들이 되라 이는 너희 수고가 주 안에서 헛되지 않은 줄을 앎이니라", "고린도전서 15:58"], ["너의 길을 여호와께 맡기라 저를 의지하면 저가 이루시고", "시편 37:5"]];
 
 const S={tasks:new Map(),lists:new Map(),prefs:{},filter:"all",selected:null,open:lsGet("wa.open")||{imp:true,late:true,up:true,done:false},
  adding:false,view:location.hash==="#cal"?"cal":"today",calMonth:null,calSel:T(),leaves:lsGet("wa.leaves")??true};
@@ -378,7 +391,8 @@ function renderHead(){
   $("#title").textContent=fmtLong(T());
   const day=all().filter(inToday),d=day.filter(t=>t.done).length,p=day.length?Math.round(d/day.length*100):0;
   $("#progNum").textContent=d+" / "+day.length;$("#ring").style.setProperty("--p",p);$("#ringTxt").textContent=p+"%";
-  const dd=new Date();$("#quote").textContent="“"+QUOTES[(dd.getDate()+dd.getMonth())%QUOTES.length]+"”";
+  const dd=new Date(),doy=Math.floor((new Date(dd.getFullYear(),dd.getMonth(),dd.getDate())-new Date(dd.getFullYear(),0,1))/864e5),q=QUOTES[(doy+dd.getFullYear())%QUOTES.length];
+  $("#quote").innerHTML="“"+esc(q[0])+"”<cite>"+esc(q[1])+"</cite>";
 }
 function renderStats(){
   const n=streak(),now=new Date(),mon=addDays(T(),-((now.getDay()+6)%7));
@@ -437,7 +451,7 @@ async function enableBadge(){lsSet("wa.badge",true);
   else toast("앱 아이콘에 남은 할 일 개수가 표시돼요");
   lastBadge=-1;updateBadge();render();}
 function renderBrand(){
-  const n=(S.prefs.name??DEF_NAME).trim();$("#brandName").textContent=n?n+"의 할 일":"오늘의 할 일";$("#hanko").textContent=n?n[0]:"燈";
+  const n=(S.prefs.name??DEF_NAME).trim();$("#brandName").textContent=n?n+"의 할 일":"오늘의 할 일";
   document.title=n?n+"의 할 일":"오늘의 할 일";
   const ni=$("#nameIn");if(ni&&document.activeElement!==ni)ni.value=n;
   const showBadgeAsk=BADGE_OK&&standalone()&&!badgeOn()&&notifState()!=="denied"&&!lsGet("wa.badgeAskHide");
