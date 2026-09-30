@@ -301,6 +301,17 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 @keyframes fcSad{0%,100%{transform:translateY(2%) rotate(0)}25%{transform:translateY(2%) rotate(-2deg)}75%{transform:translateY(2%) rotate(2deg)}}
 @keyframes fcTear{0%{opacity:0;transform:translateY(-20%)}20%{opacity:1}100%{opacity:0;transform:translateY(90%)}}
 @keyframes fcCloud{50%{transform:translateX(-8%)}}
+.fig .fc-img{display:block;width:118%;margin:0 -9% -6%;height:auto;transform-origin:50% 92%;transform:scale(var(--s));filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.fig.base .fc-img{animation:imBob 3s ease-in-out infinite}
+.fig.joy .fc-img{animation:imJump .9s cubic-bezier(.3,.7,.4,1) infinite}
+.fig.cheer .fc-img{animation:imPump .6s ease-in-out infinite}
+.fig.sleepy .fc-img{animation:imNod 3.2s ease-in-out infinite}
+.fig.sad .fc-img{animation:imSad 2.4s ease-in-out infinite}
+@keyframes imBob{0%,100%{transform:scale(var(--s)) translateY(0)}50%{transform:scale(var(--s)) translateY(-3%)}}
+@keyframes imJump{0%,100%{transform:scale(var(--s)) translateY(0) scale(1.04,.96)}40%{transform:scale(var(--s)) translateY(-12%) scale(.97,1.04)}70%{transform:scale(var(--s)) translateY(-3%)}}
+@keyframes imPump{0%,100%{transform:scale(var(--s)) translateY(0) rotate(-2deg)}50%{transform:scale(var(--s)) translateY(-5%) rotate(2deg)}}
+@keyframes imNod{0%,100%{transform:scale(var(--s)) rotate(0)}45%{transform:scale(var(--s)) rotate(-5deg) translateY(2%)}60%{transform:scale(var(--s)) rotate(-6deg) translateY(3%)}}
+@keyframes imSad{0%,100%{transform:scale(var(--s)) translateY(2%) rotate(0)}25%{transform:scale(var(--s)) translateY(2%) rotate(-2deg)}75%{transform:scale(var(--s)) translateY(2%) rotate(2deg)}}
 /* run controls on task rows */
 .runb{display:flex;gap:4px;flex:none;align-items:center}
 .rb{height:28px;padding:0 9px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink2)}
@@ -673,7 +684,11 @@ function curMood(){const now=Date.now();
   if(run.length)return "cheer";
   return "base";}
 const clean=svg=>svg.replace(/ id="[^"]*"/g,"");
-function figSVG(lv,expr){return '<svg viewBox="-4 -6 248 258" role="img" aria-label="Lv.'+lv+' '+LV_NAME[lv]+'">'+clean(flameCharacter(lv,expr,{rich:true}))+'</svg>';}
+const CHAR_IMG=/*CI*/{"1_base": "char/lv1_base.webp", "1_cheer": "char/lv1_cheer.webp", "1_joy": "char/lv1_joy.webp", "1_sad": "char/lv1_sad.webp", "1_sleepy": "char/lv1_sleepy.webp", "2_base": "char/lv2_base.webp", "2_cheer": "char/lv2_cheer.webp", "2_joy": "char/lv2_joy.webp", "2_sad": "char/lv2_sad.webp", "2_sleepy": "char/lv2_sleepy.webp", "3_base": "char/lv3_base.webp", "3_cheer": "char/lv3_cheer.webp", "3_joy": "char/lv3_joy.webp", "3_sad": "char/lv3_sad.webp", "3_sleepy": "char/lv3_sleepy.webp", "4_base": "char/lv4_base.webp", "4_cheer": "char/lv4_cheer.webp", "4_joy": "char/lv4_joy.webp", "4_sad": "char/lv4_sad.webp", "4_sleepy": "char/lv4_sleepy.webp", "5_base": "char/lv5_base.webp", "5_cheer": "char/lv5_cheer.webp", "5_joy": "char/lv5_joy.webp", "5_sad": "char/lv5_sad.webp", "5_sleepy": "char/lv5_sleepy.webp"}/*CI*/;
+const LV_SCALE=[0,.8,.86,.92,.97,1];
+function figSVG(lv,expr){const im=CHAR_IMG[lv+"_"+expr]||(expr!=="base"&&CHAR_IMG[lv+"_base"]);
+  if(im)return '<img class="fc-img" src="'+im+'" alt="Lv.'+lv+' '+LV_NAME[lv]+'" style="--s:'+LV_SCALE[lv]+'" decoding="async">';
+  return '<svg viewBox="-4 -6 248 258" role="img" aria-label="Lv.'+lv+' '+LV_NAME[lv]+'">'+clean(flameCharacter(lv,expr,{rich:true}))+'</svg>';}
 function renderStage(){
   const el=$("#stage");if(!el)return;
   const day=all().filter(inToday),p=todayPct(),lv=lvOf(p),expr=curMood();
