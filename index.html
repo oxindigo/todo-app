@@ -315,7 +315,8 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 .msum{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:12px 14px;border-radius:14px;background:rgba(255,196,120,.06);border:1px solid var(--line)}
 .msum .mtx{display:flex;flex-direction:column;gap:2px;min-width:0}.msum .mtx b{font-size:15px}.msum .mtx span{font-size:12.5px;color:var(--ink3)}
 .ring.sm{width:46px;height:46px;flex:none}.ring.sm span{width:37px;height:37px;font-size:11.5px}
-.day .pc{font-size:10.5px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.hist{display:flex;align-items:center;gap:6px;margin:10px 4px 2px;font-size:13px;font-weight:600}.hist.ok{color:var(--gold)}.hist.no{color:#e98a7a}.hist b{font-variant-numeric:tabular-nums}
+.day .pc{font-size:11.5px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .day .pc.p100{color:var(--gold)}.day .pc.p50{color:var(--accent)}.day .pc.plow{color:var(--ink3)}
 .pbar{display:block;width:62%;height:3px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
 .pbar i{display:block;height:100%;background:var(--accent);border-radius:inherit}
@@ -813,7 +814,7 @@ function renderCal(){
   for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=ymd(d),items=byDay[k]||[];
     if(i>=35&&d.getMonth()!==mo-1)break;
     const open=items.filter(t=>!t.done).length,dn=items.length-open;
-    h+='<button type="button" class="day'+(d.getMonth()!==mo-1?" out":"")+(d.getDay()===0?" su":d.getDay()===6?" sa":"")+(k===T()?" today":"")+'" data-day="'+k+'" aria-pressed="'+(S.calSel===k)+'" aria-label="'+fmtLong(k)+' 할 일 '+items.length+'개"><span class="num">'+d.getDate()+'</span>'+(items.length&&k<=T()?'<span class="pc '+pcls(pctOf(items))+'">'+(pctOf(items)>=100?"👑":pctOf(items)+"%")+'</span><span class="pbar"><i style="width:'+pctOf(items)+'%"></i></span>':'<span class="dots">'+"<i></i>".repeat(Math.min(open,3))+'<i class="d"></i>'.repeat(Math.min(dn,3-Math.min(open,3)))+'</span>')+'</button>';}
+    h+='<button type="button" class="day'+(d.getMonth()!==mo-1?" out":"")+(d.getDay()===0?" su":d.getDay()===6?" sa":"")+(k===T()?" today":"")+'" data-day="'+k+'" aria-pressed="'+(S.calSel===k)+'" aria-label="'+fmtLong(k)+' 할 일 '+items.length+'개"><span class="num">'+d.getDate()+'</span>'+(items.length&&k<=T()?'<span class="pc '+pcls(pctOf(items))+'">'+pctOf(items)+"%"+'</span><span class="pbar"><i style="width:'+pctOf(items)+'%"></i></span>':'<span class="dots">'+"<i></i>".repeat(Math.min(open,3))+'<i class="d"></i>'.repeat(Math.min(dn,3-Math.min(open,3)))+'</span>')+'</button>';}
   /* month summary (days up to today) */
   const mDays=Object.keys(byDay).filter(k=>k.slice(0,7)===m&&k<=T()),mt=mDays.flatMap(k=>byDay[k]),mDone=mt.filter(x=>x.done).length,mp=mt.length?Math.round(mDone/mt.length*100):0;
   const perfect=mDays.filter(k=>pctOf(byDay[k])===100).length;
@@ -822,8 +823,11 @@ function renderCal(){
   const sel=S.calSel,items=(byDay[sel]||[]).sort((a,b)=>(a.done?1:0)-(b.done?1:0)||byTime(a,b)||byO(a,b));
   const sp=pctOf(items),sd=items.filter(x=>x.done).length;
   $("#dayp").innerHTML='<div class="dh"><b>'+fmtLong(sel)+'</b><span>'+(sel===T()?"오늘":sel<T()?"지난 날":"예정")+' · '+items.length+'개</span></div>'+
-   (items.length&&sel<=T()?'<div class="dsum"><div class="pbar lg"><i style="width:'+sp+'%"></i></div><span class="'+pcls(sp)+'">'+sd+' / '+items.length+' 완료 · '+sp+'%'+(sp>=100?' 👑 완벽한 하루!':'')+'</span></div>':'')+
-   (items.length?items.map(t=>row(t,"day")).join(""):'<div class="empty" style="padding:14px 4px">이 날은 아직 일정이 없어요</div>')+
+
+   (items.length?(sel<T()?(()=>{const ok=items.filter(x=>x.done),no=items.filter(x=>!x.done);
+      return (ok.length?'<div class="hist ok">✅ 성공한 일 <b>'+ok.length+'</b></div>'+ok.map(t=>row(t,"day")).join(""):'')+
+             (no.length?'<div class="hist no">❌ 못 한 일 <b>'+no.length+'</b></div>'+no.map(t=>row(t,"day")).join(""):'');})()
+     :items.map(t=>row(t,"day")).join("")):'<div class="empty" style="padding:14px 4px">이 날은 아직 일정이 없어요</div>')+
    '<form class="dayadd" id="dayForm" autocomplete="off"><input class="input" id="dayInput" placeholder="'+fmtShort(sel)+'에 할 일 추가" maxlength="200" aria-label="선택한 날짜에 할 일 추가"><button class="btn btn-p" type="submit">추가</button></form>';
 }
 
