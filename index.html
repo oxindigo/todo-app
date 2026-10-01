@@ -312,6 +312,15 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
 @keyframes imPump{0%,100%{transform:scale(var(--s)) translateY(0) rotate(-2deg)}50%{transform:scale(var(--s)) translateY(-5%) rotate(2deg)}}
 @keyframes imNod{0%,100%{transform:scale(var(--s)) rotate(0)}45%{transform:scale(var(--s)) rotate(-5deg) translateY(2%)}60%{transform:scale(var(--s)) rotate(-6deg) translateY(3%)}}
 @keyframes imSad{0%,100%{transform:scale(var(--s)) translateY(2%) rotate(0)}25%{transform:scale(var(--s)) translateY(2%) rotate(-2deg)}75%{transform:scale(var(--s)) translateY(2%) rotate(2deg)}}
+.msum{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:12px 14px;border-radius:14px;background:rgba(255,196,120,.06);border:1px solid var(--line)}
+.msum .mtx{display:flex;flex-direction:column;gap:2px;min-width:0}.msum .mtx b{font-size:15px}.msum .mtx span{font-size:12.5px;color:var(--ink3)}
+.ring.sm{width:46px;height:46px;flex:none}.ring.sm span{width:37px;height:37px;font-size:11.5px}
+.day .pc{font-size:10.5px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.day .pc.p100{color:var(--gold)}.day .pc.p50{color:var(--accent)}.day .pc.plow{color:var(--ink3)}
+.pbar{display:block;width:62%;height:3px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--accent);border-radius:inherit}
+.pbar.lg{width:100%;height:6px;margin-bottom:6px}
+.dsum{margin:4px 2px 10px;font-size:13px;color:var(--ink2)}.dsum .p100{color:var(--gold);font-weight:700}.dsum .p50{color:var(--accent)}
 /* run controls on task rows */
 .runb{display:flex;gap:4px;flex:none;align-items:center}
 .rb{height:28px;padding:0 9px;border-radius:99px;font-size:12.5px;font-weight:600;white-space:nowrap;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink2)}
@@ -404,6 +413,7 @@ h2{font-family:var(--serif);font-weight:700;font-size:20px}
         <button class="btn btn-s" id="calToday" type="button" style="height:32px">오늘</button>
         <button class="icon-btn sm" id="calNext" type="button" aria-label="다음 달"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
+      <div class="msum" id="msum"></div>
       <div class="wk"><span class="su">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sa">토</span></div>
       <div class="grid" id="grid"></div>
       <div class="dayp" id="dayp"></div>
@@ -796,15 +806,23 @@ function renderCal(){
   const m=S.calMonth||T().slice(0,7);S.calMonth=m;
   const [y,mo]=m.split("-").map(Number);$("#calTitle").textContent=y+"년 "+mo+"월";
   const first=new Date(y,mo-1,1),start=new Date(first);start.setDate(1-first.getDay());
-  const byDay={};all().forEach(t=>{const k=t.due||(t.myDay===T()?t.myDay:null);if(k&&pass(t))(byDay[k]=byDay[k]||[]).push(t);});
+  const byDay={};all().forEach(t=>{const k=t.due||t.myDay||(t.done&&t.doneAt?ymd(new Date(t.doneAt)):null);if(k&&pass(t))(byDay[k]=byDay[k]||[]).push(t);});
+  const pctOf=a=>a.length?Math.round(a.filter(x=>x.done).length/a.length*100):0;
+  const pcls=p=>p>=100?"p100":p>=50?"p50":"plow";
   let h="";
   for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=ymd(d),items=byDay[k]||[];
     if(i>=35&&d.getMonth()!==mo-1)break;
     const open=items.filter(t=>!t.done).length,dn=items.length-open;
-    h+='<button type="button" class="day'+(d.getMonth()!==mo-1?" out":"")+(d.getDay()===0?" su":d.getDay()===6?" sa":"")+(k===T()?" today":"")+'" data-day="'+k+'" aria-pressed="'+(S.calSel===k)+'" aria-label="'+fmtLong(k)+' 할 일 '+items.length+'개"><span class="num">'+d.getDate()+'</span><span class="dots">'+"<i></i>".repeat(Math.min(open,3))+'<i class="d"></i>'.repeat(Math.min(dn,3-Math.min(open,3)))+'</span></button>';}
+    h+='<button type="button" class="day'+(d.getMonth()!==mo-1?" out":"")+(d.getDay()===0?" su":d.getDay()===6?" sa":"")+(k===T()?" today":"")+'" data-day="'+k+'" aria-pressed="'+(S.calSel===k)+'" aria-label="'+fmtLong(k)+' 할 일 '+items.length+'개"><span class="num">'+d.getDate()+'</span>'+(items.length&&k<=T()?'<span class="pc '+pcls(pctOf(items))+'">'+(pctOf(items)>=100?"👑":pctOf(items)+"%")+'</span><span class="pbar"><i style="width:'+pctOf(items)+'%"></i></span>':'<span class="dots">'+"<i></i>".repeat(Math.min(open,3))+'<i class="d"></i>'.repeat(Math.min(dn,3-Math.min(open,3)))+'</span>')+'</button>';}
+  /* month summary (days up to today) */
+  const mDays=Object.keys(byDay).filter(k=>k.slice(0,7)===m&&k<=T()),mt=mDays.flatMap(k=>byDay[k]),mDone=mt.filter(x=>x.done).length,mp=mt.length?Math.round(mDone/mt.length*100):0;
+  const perfect=mDays.filter(k=>pctOf(byDay[k])===100).length;
+  $("#msum").innerHTML=mt.length?'<div class="ring sm" style="--p:'+mp+'"><span>'+mp+'%</span></div><div class="mtx"><b>'+mo+'월 달성률 '+mp+'%</b><span>완료 '+mDone+' / '+mt.length+'개 · 100% 달성한 날 '+perfect+'일 · 기록한 날 '+mDays.length+'일</span></div>':'<div class="mtx"><b>'+mo+'월 달성률</b><span>'+(m>T().slice(0,7)?"아직 다가오지 않은 달이에요":"이 달에는 기록이 없어요")+'</span></div>';
   $("#grid").innerHTML=h;
   const sel=S.calSel,items=(byDay[sel]||[]).sort((a,b)=>(a.done?1:0)-(b.done?1:0)||byTime(a,b)||byO(a,b));
+  const sp=pctOf(items),sd=items.filter(x=>x.done).length;
   $("#dayp").innerHTML='<div class="dh"><b>'+fmtLong(sel)+'</b><span>'+(sel===T()?"오늘":sel<T()?"지난 날":"예정")+' · '+items.length+'개</span></div>'+
+   (items.length&&sel<=T()?'<div class="dsum"><div class="pbar lg"><i style="width:'+sp+'%"></i></div><span class="'+pcls(sp)+'">'+sd+' / '+items.length+' 완료 · '+sp+'%'+(sp>=100?' 👑 완벽한 하루!':'')+'</span></div>':'')+
    (items.length?items.map(t=>row(t,"day")).join(""):'<div class="empty" style="padding:14px 4px">이 날은 아직 일정이 없어요</div>')+
    '<form class="dayadd" id="dayForm" autocomplete="off"><input class="input" id="dayInput" placeholder="'+fmtShort(sel)+'에 할 일 추가" maxlength="200" aria-label="선택한 날짜에 할 일 추가"><button class="btn btn-p" type="submit">추가</button></form>';
 }
